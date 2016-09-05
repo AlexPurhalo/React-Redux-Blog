@@ -1,4 +1,5 @@
 <h5>Instruction</h5>
 <ol>
-	<li>Try form validation for new post creating</li>
+	<li>Create post</li>
+	<li>Check that you was redirected to posts list page</li>
 </ol>

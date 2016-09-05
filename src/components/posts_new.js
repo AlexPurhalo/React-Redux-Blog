@@ -1,10 +1,21 @@
 // Node modules import
-import React, {Component} from "react";
+import React, { Component, PropTypes } from "react";
 import {reduxForm} from "redux-form";
 import {createPost} from "../actions/index";
 
 // Creates the posts
 class PostsNew extends Component {
+	// Access to router using
+	static contextTypes = {
+		router: PropTypes.object
+	};
+
+	// Calling createPost function passing as parameter form's props and redirect to posts list
+	onSubmit(props) {
+		this.props.createPost(props)
+			.then(() => { this.context.router.push('/') });
+	}
+
 	render() {
 		const { fields: { title, categories, content }, handleSubmit } = this.props;
 		// const title = this.props.title; // console.log(title);
@@ -13,7 +24,7 @@ class PostsNew extends Component {
 
 		// in ES6 "<input {...title} />" is "<input onChange={title.onChange} formProps={title} />";
 		return (
-			<form onSubmit={handleSubmit(this.props.createPost)}>
+			<form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
 				<h3>Create a New Post</h3>
 				<fieldset className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
 					<label>Title</label>
