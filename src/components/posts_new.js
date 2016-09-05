@@ -1,12 +1,51 @@
 // Node modules import
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 
 // Creates the posts
 class PostsNew extends Component {
 	render() {
-		return <div>Create a new post</div>;
+		return (
+			<form>
+				<h3>Create a New Post</h3>
+				<fieldset className="form-group">
+					<label>Title</label>
+					<input
+						type="text"
+						className="form-control" />
+				</fieldset>
+
+				<fieldset className="form-group">
+					<label>Categories</label>
+					<input
+						type="text"
+						className="form-control" />
+				</fieldset>
+
+				<fieldset className="form-group">
+					<label>Content</label>
+					<textarea className="form-control" />
+				</fieldset>
+
+				<button
+					type="submit"
+					className="btn btn-primary">
+					Submit
+				</button>
+			</form>
+		);
 	}
 }
 
-export default connect(null)(PostsNew);
+export default reduxForm({
+	form: 'PostsNewForm',
+	fields: ['title', 'categories', 'content']
+})(PostsNew);
+
+// How redux form works
+// state === {
+// 	form: {
+// 		PostsNewForm: { title: '...', categories: '...', content: '... ' }
+// 	}
+// }
+
