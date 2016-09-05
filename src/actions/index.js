@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Import of action types
-import { FETCH_POSTS } from './types';
+import { FETCH_POSTS, CREATE_POST } from './types';
 
 
 // API url with key to access send the requests
@@ -17,4 +17,14 @@ export function fetchPosts() {
 		type: FETCH_POSTS,
 		payload: request
 	};
+}
+
+// Action to create a new post
+export function createPost(props) {
+	const request = axios.post(`${ROOT_URL}/posts/${API_KEY}`, props);
+
+	return {
+		type: CREATE_POST,
+		payload: request
+	}
 }
