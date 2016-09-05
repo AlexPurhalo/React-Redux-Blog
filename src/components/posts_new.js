@@ -1,7 +1,7 @@
 // Node modules import
-import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
-import { createPost } from '../actions/index';
+import React, {Component} from "react";
+import {reduxForm} from "redux-form";
+import {createPost} from "../actions/index";
 
 // Creates the posts
 class PostsNew extends Component {
@@ -15,27 +15,36 @@ class PostsNew extends Component {
 		return (
 			<form onSubmit={handleSubmit(this.props.createPost)}>
 				<h3>Create a New Post</h3>
-				<fieldset className="form-group">
+				<fieldset className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
 					<label>Title</label>
 					<input
 						type="text"
 						className="form-control"
 						{...title } />
+					<div className="text-help">
+						{title.touched ? title.error : ''}
+					</div>
 				</fieldset>
 
-				<fieldset className="form-group">
+				<fieldset className={`form-group ${categories.touched && categories.invalid ? 'has-danger' : ''}`}>
 					<label>Categories</label>
 					<input
 						type="text"
 						className="form-control"
 						{...categories} />
+					<div className="text-help">
+						{categories.touched ? categories.error : ''}
+					</div>
 				</fieldset>
 
-				<fieldset className="form-group">
+				<fieldset className={`form-group ${content.touched && content.invalid ? 'has-danger' : ''}`}>
 					<label>Content</label>
 					<textarea
 						className="form-control"
 						{...content} />
+					<div className="text-help">
+						{content.touched ? content.error : ''}
+					</div>
 				</fieldset>
 
 				<button
@@ -48,9 +57,21 @@ class PostsNew extends Component {
 	}
 }
 
+// Fields validation
+function validate(values) {
+	const errors = {};
+
+	if (!values.title) errors.title = 'Enter a username';
+	if (!values.categories) errors.categories = 'Enter the categories';
+	if (!values.content) errors.content = 'Enter some content';
+
+	return errors;
+}
+
 export default reduxForm({
 	form: 'PostsNewForm',
-	fields: ['title', 'categories', 'content']
+	fields: ['title', 'categories', 'content'],
+	validate
 }, null, { createPost })(PostsNew);
 
 // How redux form works
