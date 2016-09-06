@@ -1,18 +1,27 @@
 // Node modules import
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { fetchPost, deletePost } from '../actions/index';
 
 // Shows single post data
 class PostsShow extends Component {
+	// Access to use routing
+	static contextTypes = {
+		router: PropTypes.object
+	};
+
+	// Fetches single post
 	componentWillMount() {
 		this.props.fetchPost(this.props.params.id);
 	}
 
+	// Calls action for sending DELETE request, then redirects to posts page
 	onDeleteClick() {
-		this.props.deletePost(this.props.params.id);
+		this.props.deletePost(this.props.params.id)
+			.then(() => { this.context.router.push('/') });
 	}
 
+	// JSX rendering
 	render() {
 		const { post } = this.props; // this.props.title, this.props.categories, this.props.content
 
