@@ -10,8 +10,24 @@ class PostsShow extends Component {
 	}
 
 	render() {
-		return <div>One post page, id: {this.props.params.id}</div>;
+		const { post } = this.props; // this.props.title, this.props.categories, this.props.content
+
+		// console.log(this.props.post);
+		if (!post) return <div>Loading...</div>;
+
+		return (
+			<div>
+				<h3>{post.title}</h3>
+				<h6>Categories: {post.categories}</h6>
+				<p>{post.content}</p>
+			</div>
+		);
 	}
 }
 
-export default connect(null, { fetchPost })(PostsShow);
+// Storing state with data about single post to property
+function mapStateToProps(state) {
+	return { post: state.posts.post };
+}
+
+export default connect(mapStateToProps, { fetchPost })(PostsShow);
