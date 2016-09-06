@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Import of action types
-import { FETCH_POSTS, CREATE_POST, FETCH_POST } from './types';
+import { FETCH_POSTS, CREATE_POST, FETCH_POST, DELETE_POST } from './types';
 
 
 // API url with key to access send the requests
@@ -35,6 +35,16 @@ export function fetchPost(id) {
 
 	return {
 		type: FETCH_POST,
+		payload: request
+	}
+}
+
+// Post destroying
+export function deletePost(id) {
+	const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`);
+
+	return {
+		type: DELETE_POST,
 		payload: request
 	}
 }
